@@ -4,16 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.swagger.v3.oas.models.tags.Tag;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @XmlRootElement(name = "Pet")
-public class Pet {
+public class Pet implements java.io.Serializable{
   private long id;
   private String name;
-  private List<Tag> tags = new ArrayList<Tag>();
-
+  @Id
   @XmlElement(name = "id")
   public long getId() {
     return id;
@@ -32,13 +38,4 @@ public class Pet {
     this.name = name;
   }
 
-  @XmlElementWrapper(name = "tags")
-  @XmlElement(name = "tag")
-  public List<Tag> getTags() {
-    return tags;
-  }
-
-  public void setTags(List<Tag> tags) {
-    this.tags = tags;
-  }
 }

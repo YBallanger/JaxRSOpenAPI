@@ -1,5 +1,8 @@
 package fr.istic.taa.jaxrs.rest;
 
+import fr.istic.taa.jaxrs.dao.PetDao;
+import fr.istic.taa.jaxrs.dao.generic.AbstractJpaDao;
+import fr.istic.taa.jaxrs.dao.generic.IGenericDao;
 import fr.istic.taa.jaxrs.domain.Pet;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.ws.rs.Consumes;
@@ -14,17 +17,18 @@ import jakarta.ws.rs.core.Response;
 @Produces({"application/json", "application/xml"})
 public class PetResource {
 
+  PetDao petDao = new PetDao();
+
   @GET
   @Path("/{petId}")
   public Pet getPetById(@PathParam("petId") Long petId)  {
-      // return pet
-      return new Pet();
+        return petDao.findOne(1L);
   }
 
   @GET
   @Path("/")
   public Pet getPet(Long petId)  {
-      return new Pet();
+        return petDao.findOne(1L);
   }
 
   
@@ -32,7 +36,7 @@ public class PetResource {
   @Consumes("application/json")
   public Response addPet(
       @Parameter(description = "Pet object that needs to be added to the store", required = true) Pet pet) {
-    // add pet
+    petDao.save(pet);
     return Response.ok().entity("SUCCESS").build();
   }
 }
